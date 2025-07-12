@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const card = document.createElement('div');
             card.className = 'card';
             card.innerHTML = `
-                <img src="${post.small_image?.[0]?.url || 'https://via.placeholder.com/300x200'}" 
+                <img src="${post.small_image?.[0]?.url || ''}" 
                      alt="${post.title}" 
                      class="card-thumbnail" 
                      loading="lazy">
@@ -131,8 +131,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // === Event Listeners ===
-
-    // Kontrol Header saat scroll
     window.addEventListener('scroll', () => {
         let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         if (scrollTop > lastScrollTop && scrollTop > 70) {
@@ -148,13 +146,11 @@ document.addEventListener('DOMContentLoaded', () => {
         lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
     }, false);
 
-    // Ganti jumlah item per halaman
     perPageSelect.addEventListener('change', (e) => {
         const newSize = parseInt(e.target.value);
         fetchIdeas(1, newSize, sortBy);
     });
 
-    // Ganti urutan sorting
     sortBySelect.addEventListener('change', (e) => {
         const newSort = e.target.value;
         fetchIdeas(1, itemsPerPage, newSort);
