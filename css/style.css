@@ -62,7 +62,7 @@ body {
 .banner {
     padding-top: 70px; /* Offset for fixed header */
     height: 50vh;
-    background-image: url('https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRxFpaPV-nw81Us2Dyqo1IUM_dstoKRmRhbOyTcjKA-c7d3I-VV');
+    background-image: url('../img.jpg');
     background-size: cover;
     background-position: center;
     display: flex;
