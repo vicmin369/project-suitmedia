@@ -69,14 +69,12 @@ body {
     align-items: center;
     justify-content: center;
     text-align: center;
-    color: white;
     position: relative;
     clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
 }
 
 .banner-text h1 {
     font-size: 48px;
-    color: black;
     margin: 0;
 }
 
