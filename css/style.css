@@ -62,7 +62,7 @@ body {
 .banner {
     padding-top: 70px; /* Offset for fixed header */
     height: 50vh;
-    background-image: url('../img.jpg');
+    background-image: url('../img2.jpg');
     background-size: cover;
     background-position: center;
     display: flex;
