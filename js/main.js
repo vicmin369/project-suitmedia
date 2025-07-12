@@ -31,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 'page[number]': page,
                 'page[size]': size,
                 'sort': sort,
-                'append[]': ['small_image', 'medium_image']
             });
             
             // Mengirim permintaan dengan header 'Accept: application/json'
