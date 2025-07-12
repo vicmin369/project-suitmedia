@@ -8,7 +8,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // === State Management ===
     let lastScrollTop = 0;
-    const API_BASE_URL = 'https://suitmedia-backend.suitdev.com/api/ideas';
+    
+    // 1. PENGATURAN PROXY (Sesuai instruksi)
+    // Menggunakan proxy publik untuk menangani potensi CORS di lingkungan web.
+    const PROXY_URL = 'https://corsproxy.io/?';
+    const API_URL = 'https://suitmedia-backend.suitdev.com/api/ideas';
+    const API_BASE_URL = `${PROXY_URL}${encodeURIComponent(API_URL)}`;
 
     // Mendapatkan state dari URL atau menggunakan nilai default
     const urlParams = new URLSearchParams(window.location.search);
@@ -21,19 +26,18 @@ document.addEventListener('DOMContentLoaded', () => {
     sortBySelect.value = sortBy;
 
     // === Fungsi-Fungsi ===
-
-    // 1. Fungsi untuk mengambil data dari API
     async function fetchIdeas(page, size, sort) {
         postListContainer.innerHTML = '<p>Loading posts...</p>';
         try {
+            // 2. MENGGUNAKAN SEMUA PARAMS (Sesuai instruksi)
             const params = new URLSearchParams({
                 'page[number]': page,
                 'page[size]': size,
                 'sort': sort,
-                'append[]': ['small_image', 'medium_image']
+                'append[]': ['small_image', 'medium_image'] // Termasuk append
             });
             
-            const response = await fetch(`${API_BASE_URL}?${params.toString()}`, {
+            const response = await fetch(`${API_BASE_URL}&${params.toString()}`, {
                 headers: {
                     'Accept': 'application/json'
                 }
@@ -54,14 +58,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 2. Fungsi untuk menampilkan post ke dalam HTML
     function renderPosts(posts) {
         if (!posts || posts.length === 0) {
             postListContainer.innerHTML = '<p>No posts found.</p>';
             return;
         }
 
-        postListContainer.innerHTML = ''; // Kosongkan kontainer
+        postListContainer.innerHTML = '';
         posts.forEach(post => {
             const postDate = new Date(post.published_at).toLocaleDateString('id-ID', {
                 day: 'numeric', month: 'long', year: 'numeric'
@@ -69,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const card = document.createElement('div');
             card.className = 'card';
             card.innerHTML = `
-                <img src="${post.small_image?.[0]?.url || 'https://placehold.co/300x200'}" 
+                <img src="${post.small_image?.[0]?.url || ''}" 
                      alt="${post.title}" 
                      class="card-thumbnail" 
                      loading="lazy">
@@ -82,7 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // 3. Fungsi untuk membuat tombol pagination
     function renderPagination(meta) {
         paginationContainer.innerHTML = '';
         if (!meta || meta.last_page <= 1) return;
@@ -118,7 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
         paginationContainer.appendChild(nextButton);
     }
     
-    // 4. Fungsi untuk update URL agar state tidak hilang saat refresh
     function updateURL(page, size, sort) {
         const newUrl = `${window.location.pathname}?page=${page}&per_page=${size}&sort=${sort}`;
         window.history.pushState({ path: newUrl }, '', newUrl);
@@ -126,7 +127,6 @@ document.addEventListener('DOMContentLoaded', () => {
         itemsPerPage = size;
         sortBy = sort;
     }
-
 
     // === Event Listeners ===
     window.addEventListener('scroll', () => {
