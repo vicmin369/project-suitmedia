@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // === State Management ===
     let lastScrollTop = 0;
-    // URL API Asli tanpa proxy
     const API_BASE_URL = 'https://suitmedia-backend.suitdev.com/api/ideas';
 
     // Mendapatkan state dari URL atau menggunakan nilai default
@@ -34,7 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 'append[]': ['small_image', 'medium_image']
             });
             
-            // Mengirim permintaan dengan header 'Accept: application/json'
             const response = await fetch(`${API_BASE_URL}?${params.toString()}`, {
                 headers: {
                     'Accept': 'application/json'
@@ -71,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const card = document.createElement('div');
             card.className = 'card';
             card.innerHTML = `
-                <img src="${post.small_image?.[0]?.url || ''}" 
+                <img src="${post.small_image?.[0]?.url || 'https://placehold.co/300x200'}" 
                      alt="${post.title}" 
                      class="card-thumbnail" 
                      loading="lazy">
