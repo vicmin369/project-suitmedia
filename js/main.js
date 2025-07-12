@@ -9,11 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // === State Management ===
     let lastScrollTop = 0;
     
-    // 1. PENGATURAN PROXY (Sesuai instruksi)
-    // Menggunakan proxy publik untuk menangani potensi CORS di lingkungan web.
-    const PROXY_URL = 'https://corsproxy.io/?';
-    const API_URL = 'https://suitmedia-backend.suitdev.com/api/ideas';
-    const API_BASE_URL = `${PROXY_URL}${encodeURIComponent(API_URL)}`;
+    // Mencoba proxy alternatif terakhir
+    const API_BASE_URL = 'https://api.allorigins.win/raw?url=https%3A%2F%2Fsuitmedia-backend.suitdev.com%2Fapi%2Fideas';
 
     // Mendapatkan state dari URL atau menggunakan nilai default
     const urlParams = new URLSearchParams(window.location.search);
@@ -29,15 +26,14 @@ document.addEventListener('DOMContentLoaded', () => {
     async function fetchIdeas(page, size, sort) {
         postListContainer.innerHTML = '<p>Loading posts...</p>';
         try {
-            // 2. MENGGUNAKAN SEMUA PARAMS (Sesuai instruksi)
             const params = new URLSearchParams({
                 'page[number]': page,
                 'page[size]': size,
                 'sort': sort,
-                'append[]': ['small_image', 'medium_image'] // Termasuk append
+                'append[]': ['small_image', 'medium_image']
             });
             
-            const response = await fetch(`${API_BASE_URL}&${params.toString()}`, {
+            const response = await fetch(`${API_BASE_URL}%3F${params.toString().replace(/=/g, '%3D').replace(/&/g, '%26')}`, {
                 headers: {
                     'Accept': 'application/json'
                 }
