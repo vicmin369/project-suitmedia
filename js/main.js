@@ -81,37 +81,61 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
+    // 3. Fungsi untuk membuat tombol pagination
     function renderPagination(meta) {
         paginationContainer.innerHTML = '';
         if (!meta || meta.last_page <= 1) return;
 
+        const currentPage = meta.current_page;
+        const totalPages = meta.last_page;
+
+        // Tombol "Previous" (Anak Panah Kiri)
         const prevButton = document.createElement('button');
         prevButton.innerText = '«';
-        prevButton.disabled = meta.current_page === 1;
+        prevButton.disabled = currentPage === 1;
         prevButton.addEventListener('click', () => {
-            fetchIdeas(meta.current_page - 1, itemsPerPage, sortBy);
+            fetchIdeas(currentPage - 1, itemsPerPage, sortBy);
         });
         paginationContainer.appendChild(prevButton);
-        
-        for (let i = 1; i <= meta.last_page; i++) {
-            const pageButton = document.createElement('button');
-            pageButton.innerText = i;
-            if (i === meta.current_page) {
-                pageButton.className = 'active';
-            }
-            pageButton.addEventListener('click', () => {
-                if (i !== meta.current_page) {
-                    fetchIdeas(i, itemsPerPage, sortBy);
+
+        let lastPageRendered = 0;
+        for (let i = 1; i <= totalPages; i++) {
+            // Kondisi untuk menampilkan nomor halaman:
+            // 1. Halaman pertama (i === 1)
+            // 2. Halaman terakhir (i === totalPages)
+            // 3. Halaman di sekitar halaman aktif (satu sebelum dan satu sesudah)
+            if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+            
+                // Jika ada gap antara nomor terakhir yang ditampilkan, tambahkan elipsis "..."
+                if (lastPageRendered !== 0 && i > lastPageRendered + 1) {
+                    const ellipsis = document.createElement('span');
+                    ellipsis.className = 'pagination-ellipsis';
+                    ellipsis.innerText = '...';
+                    paginationContainer.appendChild(ellipsis);
                 }
-            });
-            paginationContainer.appendChild(pageButton);
+
+                // Buat tombol halaman
+                const pageButton = document.createElement('button');
+                pageButton.innerText = i;
+                if (i === currentPage) {
+                    pageButton.className = 'active';
+                }
+                pageButton.addEventListener('click', () => {
+                    if (i !== currentPage) {
+                        fetchIdeas(i, itemsPerPage, sortBy);
+                    }
+                });
+                paginationContainer.appendChild(pageButton);
+                lastPageRendered = i;
+            }
         }
 
+        // Tombol "Next" (Anak Panah Kanan)
         const nextButton = document.createElement('button');
         nextButton.innerText = '»';
-        nextButton.disabled = meta.current_page === meta.last_page;
+        nextButton.disabled = currentPage === totalPages;
         nextButton.addEventListener('click', () => {
-            fetchIdeas(meta.current_page + 1, itemsPerPage, sortBy);
+            fetchIdeas(currentPage + 1, itemsPerPage, sortBy);
         });
         paginationContainer.appendChild(nextButton);
     }
