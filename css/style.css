@@ -73,6 +73,10 @@ body {
     clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
 }
 
+.banner-text {
+    color: white;
+}
+
 .banner-text h1 {
     font-size: 48px;
     margin: 0;
