@@ -70,7 +70,7 @@ body {
     justify-content: center;
     text-align: center;
     position: relative;
-    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 70%, 0 100%);
 }
 
 .banner-text {
