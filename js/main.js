@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // === State Management ===
     let lastScrollTop = 0;
-    // URL API Asli TANPA PROXY
     const API_BASE_URL = 'https://suitmedia-backend.suitdev.com/api/ideas';
 
     // Mendapatkan state dari URL atau menggunakan nilai default
@@ -25,7 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
     async function fetchIdeas(page, size, sort) {
         postListContainer.innerHTML = '<p>Loading posts...</p>';
         try {
-            // PERUBAHAN 1: Hanya menggunakan append 'medium_image'
             const params = new URLSearchParams({
                 'page[number]': page,
                 'page[size]': size,
@@ -68,7 +66,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const card = document.createElement('div');
             card.className = 'card';
 
-            // Ambil URL gambar dari API, jika tidak ada, siapkan placeholder
             const imageUrl = post.medium_image?.[0]?.url;
             const placeholderUrl = 'https://placehold.co/300x200';
 
@@ -83,18 +80,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
 
-            // === PERUBAHAN DIMULAI DI SINI ===
 
-            // Cari elemen gambar yang baru saja kita buat
             const imgElement = card.querySelector('.card-thumbnail');
-
-            // Tambahkan event listener 'onerror'
-            // Ini akan berjalan jika 'src' gambar dari API gagal dimuat
             imgElement.onerror = () => {
-                imgElement.src = placeholderUrl; // Ganti dengan gambar placeholder
+                imgElement.src = placeholderUrl;
             };
         
-        // === PERUBAHAN SELESAI ===
 
             postListContainer.appendChild(card);
         });
@@ -119,10 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let lastPageRendered = 0;
         for (let i = 1; i <= totalPages; i++) {
-            // Kondisi untuk menampilkan nomor halaman:
-            // 1. Halaman pertama (i === 1)
-            // 2. Halaman terakhir (i === totalPages)
-            // 3. Halaman di sekitar halaman aktif (satu sebelum dan satu sesudah)
+            // Kondisi untuk menampilkan nomor halaman
             if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
             
                 // Jika ada gap antara nomor terakhir yang ditampilkan, tambahkan elipsis "..."
