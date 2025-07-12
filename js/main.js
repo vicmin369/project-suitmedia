@@ -67,8 +67,13 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             const card = document.createElement('div');
             card.className = 'card';
+
+            // Ambil URL gambar dari API, jika tidak ada, siapkan placeholder
+            const imageUrl = post.medium_image?.[0]?.url;
+            const placeholderUrl = 'https://placehold.co/300x200';
+
             card.innerHTML = `
-                <img src="${post.medium_image?.[0]?.url || 'https://placehold.co/300x200'}" 
+                <img src="${imageUrl || placeholderUrl}" 
                      alt="${post.title}" 
                      class="card-thumbnail" 
                      loading="lazy">
@@ -77,6 +82,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     <h3 class="card-title">${post.title}</h3>
                 </div>
             `;
+
+            // === PERUBAHAN DIMULAI DI SINI ===
+
+            // Cari elemen gambar yang baru saja kita buat
+            const imgElement = card.querySelector('.card-thumbnail');
+
+            // Tambahkan event listener 'onerror'
+            // Ini akan berjalan jika 'src' gambar dari API gagal dimuat
+            imgElement.onerror = () => {
+                imgElement.src = placeholderUrl; // Ganti dengan gambar placeholder
+            };
+        
+        // === PERUBAHAN SELESAI ===
+
             postListContainer.appendChild(card);
         });
     }
