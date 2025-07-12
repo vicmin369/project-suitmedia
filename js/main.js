@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // === State Management ===
     let lastScrollTop = 0;
-    const API_BASE_URL = 'https://corsproxy.io/?https%3A%2F%2Fsuitmedia-backend.suitdev.com%2Fapi%2Fideas';
+    const API_BASE_URL = 'https://api.allorigins.win/raw?url=https%3A%2F%2Fsuitmedia-backend.suitdev.com%2Fapi%2Fideas';
 
     // Mendapatkan state dari URL atau menggunakan nilai default
     const urlParams = new URLSearchParams(window.location.search);
