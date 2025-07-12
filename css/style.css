@@ -1,0 +1,179 @@
+/* General Styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* 1. Header */
+#navbar {
+    background-color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    transition: top 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+}
+
+.logo {
+    font-weight: 700;
+    font-size: 24px;
+    text-decoration: none;
+    color: #ff6f61;
+}
+
+.nav-menu {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+    padding-bottom: 5px;
+}
+
+.nav-menu a.active {
+    color: #ff6f61;
+    border-bottom: 2px solid #ff6f61;
+}
+
+/* 2. Banner */
+.banner {
+    padding-top: 70px; /* Offset for fixed header */
+    height: 50vh;
+    background-image: url('https://suitmedia.static.files.suitdev.com/media/suitmedia/misc/bg-suitmedia-career-2.jpg'); /* Ganti dengan gambar banner default */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    position: relative;
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+}
+
+.banner-text h1 {
+    font-size: 48px;
+    margin: 0;
+}
+
+.banner-text p {
+    font-size: 20px;
+}
+
+/* 3. Post List Section */
+.post-section {
+    padding: 40px 0;
+}
+
+.filter-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.filter-controls select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.post-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    overflow: hidden;
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-thumbnail {
+    width: 100%;
+    aspect-ratio: 16 / 10; /* Rasio gambar konsisten */
+    object-fit: cover;
+    background-color: #eee; /* Warna placeholder saat lazy load */
+}
+
+.card-body {
+    padding: 15px;
+}
+
+.card-date {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 10px;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+    height: 81px; /* 3 baris * 27px line-height */
+    line-height: 1.5; /* 18px * 1.5 = 27px */
+    
+    /* Truncate text to 3 lines with ellipsis */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+/* 4. Pagination */
+.pagination-controls {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagination-controls button {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.pagination-controls button.active {
+    background-color: #ff6f61;
+    color: white;
+    border-color: #ff6f61;
+}
+
+.pagination-controls button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
