@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ideas - Suitmedia</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header id="navbar">
+        <div class="container">
+            <nav class="navbar-content">
+                <a href="#" class="logo">Suitmedia</a>
+                <ul class="nav-menu">
+                    <li><a href="#">Work</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#" class="active">Ideas</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="banner">
+            <div class="banner-text">
+                <h1>Ideas</h1>
+                <p>Where all our great things begin</p>
+            </div>
+        </section>
+
+        <section class="post-section">
+            <div class="container">
+                <div class="filter-controls">
+                    <div class="show-per-page">
+                        <label for="perPage">Show per page:</label>
+                        <select id="perPage">
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                        </select>
+                    </div>
+                    <div class="sort-by">
+                        <label for="sortBy">Sort by:</label>
+                        <select id="sortBy">
+                            <option value="-published_at">Newest</option>
+                            <option value="published_at">Oldest</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="post-list" class="post-grid">
+                    </div>
+                <div id="pagination" class="pagination-controls">
+                    </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
