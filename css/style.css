@@ -62,7 +62,7 @@ body {
 .banner {
     padding-top: 70px; /* Offset for fixed header */
     height: 50vh;
-    background-image: url('../images/banner.jpg');
+    background-image: url('https://suitmedia.static.files.suitdev.com/media/suitmedia/misc/bg-suitmedia-career-2.jpg');
     background-size: cover;
     background-position: center;
     display: flex;
