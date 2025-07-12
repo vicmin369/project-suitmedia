@@ -8,9 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // === State Management ===
     let lastScrollTop = 0;
-    
-    const PROXY_URL = 'https://api.allorigins.win/raw?url=';
-    const API_URL = 'https://suitmedia-backend.suitdev.com/api/ideas';
+    // URL API Asli TANPA PROXY
+    const API_BASE_URL = 'https://suitmedia-backend.suitdev.com/api/ideas';
 
     // Mendapatkan state dari URL atau menggunakan nilai default
     const urlParams = new URLSearchParams(window.location.search);
@@ -26,18 +25,15 @@ document.addEventListener('DOMContentLoaded', () => {
     async function fetchIdeas(page, size, sort) {
         postListContainer.innerHTML = '<p>Loading posts...</p>';
         try {
+            // PERUBAHAN 1: Hanya menggunakan append 'medium_image'
             const params = new URLSearchParams({
                 'page[number]': page,
                 'page[size]': size,
                 'sort': sort,
-                'append[]': ['small_image', 'medium_image']
+                'append[]': 'medium_image'
             });
             
-            // MEMPERBAIKI CARA MEMBANGUN URL UNTUK PROXY
-            const targetUrl = `${API_URL}?${params.toString()}`;
-            const fetchUrl = `${PROXY_URL}${encodeURIComponent(targetUrl)}`;
-
-            const response = await fetch(fetchUrl, {
+            const response = await fetch(`${API_BASE_URL}?${params.toString()}`, {
                 headers: {
                     'Accept': 'application/json'
                 }
@@ -72,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const card = document.createElement('div');
             card.className = 'card';
             card.innerHTML = `
-                <img src="${post.small_image?.[0]?.url || ''}" 
+                <img src="${post.medium_image?.[0]?.url || 'https://placehold.co/300x200'}" 
                      alt="${post.title}" 
                      class="card-thumbnail" 
                      loading="lazy">
