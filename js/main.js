@@ -8,7 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // === State Management ===
     let lastScrollTop = 0;
-    const API_BASE_URL = 'https://api.allorigins.win/raw?url=https%3A%2F%2Fsuitmedia-backend.suitdev.com%2Fapi%2Fideas';
+    // URL API Asli tanpa proxy
+    const API_BASE_URL = 'https://suitmedia-backend.suitdev.com/api/ideas';
 
     // Mendapatkan state dari URL atau menggunakan nilai default
     const urlParams = new URLSearchParams(window.location.search);
@@ -24,7 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 1. Fungsi untuk mengambil data dari API
     async function fetchIdeas(page, size, sort) {
-        // Tampilkan loading state jika perlu
         postListContainer.innerHTML = '<p>Loading posts...</p>';
         try {
             const params = new URLSearchParams({
@@ -34,15 +34,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 'append[]': ['small_image', 'medium_image']
             });
             
-            // NOTE: URL ini mungkin butuh proxy di lingkungan development
-            const response = await fetch(`${API_BASE_URL}?${params.toString()}`);
+            // Mengirim permintaan dengan header 'Accept: application/json'
+            const response = await fetch(`${API_BASE_URL}?${params.toString()}`, {
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
+
             const data = await response.json();
             renderPosts(data.data);
             renderPagination(data.meta);
             updateURL(page, size, sort);
+
         } catch (error) {
             console.error("Could not fetch ideas:", error);
             postListContainer.innerHTML = `<p>Failed to load posts. ${error.message}</p>`;
@@ -82,7 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
         paginationContainer.innerHTML = '';
         if (!meta || meta.last_page <= 1) return;
 
-        // Tombol "Previous"
         const prevButton = document.createElement('button');
         prevButton.innerText = '«';
         prevButton.disabled = meta.current_page === 1;
@@ -91,7 +97,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         paginationContainer.appendChild(prevButton);
         
-        // Tombol halaman
         for (let i = 1; i <= meta.last_page; i++) {
             const pageButton = document.createElement('button');
             pageButton.innerText = i;
@@ -106,7 +111,6 @@ document.addEventListener('DOMContentLoaded', () => {
             paginationContainer.appendChild(pageButton);
         }
 
-        // Tombol "Next"
         const nextButton = document.createElement('button');
         nextButton.innerText = '»';
         nextButton.disabled = meta.current_page === meta.last_page;
@@ -120,7 +124,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateURL(page, size, sort) {
         const newUrl = `${window.location.pathname}?page=${page}&per_page=${size}&sort=${sort}`;
         window.history.pushState({ path: newUrl }, '', newUrl);
-        // Update state global
         currentPage = page;
         itemsPerPage = size;
         sortBy = sort;
@@ -132,14 +135,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Kontrol Header saat scroll
     window.addEventListener('scroll', () => {
         let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        if (scrollTop > lastScrollTop && scrollTop > 70) { // Scroll Down
+        if (scrollTop > lastScrollTop && scrollTop > 70) {
             navbar.style.top = '-80px';
-        } else { // Scroll Up
+        } else {
             navbar.style.top = '0';
             if (scrollTop > 0) {
-                navbar.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+                 navbar.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
             } else {
-                navbar.style.backgroundColor = 'rgba(255, 255, 255, 1)';
+                 navbar.style.backgroundColor = 'rgba(255, 255, 255, 1)';
             }
         }
         lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
@@ -148,13 +151,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Ganti jumlah item per halaman
     perPageSelect.addEventListener('change', (e) => {
         const newSize = parseInt(e.target.value);
-        fetchIdeas(1, newSize, sortBy); // Selalu kembali ke halaman 1 saat filter diubah
+        fetchIdeas(1, newSize, sortBy);
     });
 
     // Ganti urutan sorting
     sortBySelect.addEventListener('change', (e) => {
         const newSort = e.target.value;
-        fetchIdeas(1, itemsPerPage, newSort); // Selalu kembali ke halaman 1 saat filter diubah
+        fetchIdeas(1, itemsPerPage, newSort);
     });
 
     // === Panggilan Awal ===
