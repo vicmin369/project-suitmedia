@@ -170,6 +170,11 @@ body {
     border-radius: 5px;
 }
 
+.pagination-ellipsis {
+    padding: 10px 15px;
+    color: #888;
+}
+
 .pagination-controls button.active {
     background-color: #ff6f61;
     color: white;
