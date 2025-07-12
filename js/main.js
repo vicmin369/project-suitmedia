@@ -9,8 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // === State Management ===
     let lastScrollTop = 0;
     
-    // Mencoba proxy alternatif terakhir
-    const API_BASE_URL = 'https://api.allorigins.win/raw?url=https%3A%2F%2Fsuitmedia-backend.suitdev.com%2Fapi%2Fideas';
+    const PROXY_URL = 'https://api.allorigins.win/raw?url=';
+    const API_URL = 'https://suitmedia-backend.suitdev.com/api/ideas';
 
     // Mendapatkan state dari URL atau menggunakan nilai default
     const urlParams = new URLSearchParams(window.location.search);
@@ -33,7 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 'append[]': ['small_image', 'medium_image']
             });
             
-            const response = await fetch(`${API_BASE_URL}%3F${params.toString().replace(/=/g, '%3D').replace(/&/g, '%26')}`, {
+            // MEMPERBAIKI CARA MEMBANGUN URL UNTUK PROXY
+            const targetUrl = `${API_URL}?${params.toString()}`;
+            const fetchUrl = `${PROXY_URL}${encodeURIComponent(targetUrl)}`;
+
+            const response = await fetch(fetchUrl, {
                 headers: {
                     'Accept': 'application/json'
                 }
